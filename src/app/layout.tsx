@@ -26,16 +26,22 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className="h-full">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen bg-cover bg-center bg-no-repeat`}
-        style={{
-          backgroundImage: 'url("/nush-bg.png")',
-        }}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen h-full`}
       >
-        <div className="min-h-screen bg-white/50">
+        <div
+          className="fixed inset-0 bg-cover bg-center bg-no-repeat -z-20"
+          style={{
+            backgroundImage: 'url("/nush-bg.png")',
+          }}
+        />
+        <div className="fixed inset-0 bg-white/50 -z-10" />
+        <div className="relative min-h-screen">
           <Sidebar />
-          {children}
+          <main>
+            {children}
+          </main>
         </div>
       </body>
     </html>
