@@ -3,129 +3,72 @@
 import React, { useState } from "react";
 
 interface CampusArea {
-  name: string;
-  previewImage: string;
-  fullImage: string;
+    name: string;
+    previewImage: string;
+    fullImage: string;
 }
 
 interface CampusReimaginedProps {
-  areas: CampusArea[];
+    areas: CampusArea[];
 }
 
 const CampusReimagined: React.FC<CampusReimaginedProps> = ({ areas }) => {
-  const [currentArea, setCurrentArea] = useState<string>(areas[0].fullImage);
+    const [currentArea, setCurrentArea] = useState<string>(areas[0].fullImage);
 
-  const handleButtonClick = (fullImage: string) => {
-    setCurrentArea(fullImage);
-  };
+    const handleButtonClick = (fullImage: string) => {
+        setCurrentArea(fullImage);
+    };
 
-  return (
-    <div className="campus-reimagined">
-      <div className="button-container">
-        {areas.map((area, index) => (
-          <button
-            key={index}
-            onClick={() => handleButtonClick(area.fullImage)}
-            className={`button button-${index}`}
-          >
-            <img 
-              src={area.previewImage} 
-              alt={area.name} 
-              className="button-image" 
-            />
-          </button>
-        ))}
-      </div>
+    return (
+        <div className="relative min-h-screen w-11/12 left-32 flex flex-col items-center justify-center overflow-hidden">
+            <div className="absolute inset-0">
+                {areas.map((area, index) => {
+                    const buttonStyles = {
+                        backgroundImage: `url(${area.previewImage})`,
+                        backgroundSize: 'cover',
+                        backgroundPosition: 'center',
+                        clipPath: index === 0
+                            ? 'polygon(20% 100%, 80% 100%, 100% 0, 0 0)' // top arrow
+                            : index === 1
+                                ? 'polygon(0 100%, 100% 100%, 80% 0, 20% 0)' // bottom arrow
+                                : index === 2
+                                    ? 'polygon(0 0, 100% 20%, 100% 80%, 0 100%)' // left arrow
+                                    : 'polygon(100% 0, 100% 100%, 0 80%, 0 20%)' // right arrow
+                    };
 
-      <div className="image-display">
-        <img src={currentArea} alt="Campus Area" className="campus-image" />
-      </div>
-
-      <style jsx>{`
-        .campus-reimagined {
-          position: relative;
-          min-height: 100vh;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
-          overflow: hidden;
-        }
-
-        .button-container {
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-        }
-
-        .button {
-          position: absolute;
-          background: none;
-          border: none;
-          cursor: pointer;
-          padding: 0;
-        }
-
-        .button:hover .button-image {
-          transform: scale(1.05);
-          transition: transform 0.1s ease-in-out;
-        }
-
-        .button-image {
-          display: block;
-          width: 100%;
-          height: auto;
-        }
-
-        /* Button Dimensions and Positions */
-        .button-0 { /* Top */
-          top: 0;
-          left: 50%;
-          transform: translateX(-50%);
-          width: 743px;
-          height: 346px;
-        }
-
-        .button-1 { /* Bottom */
-          bottom: 0;
-          left: 50%;
-          transform: translateX(-50%);
-          width: 743px;
-          height: 346px;
-        }
-
-        .button-2 { /* Left */
-          top: 50%;
-          left: 0;
-          transform: translateY(-50%);
-          width: 378px;
-          height: 468px;
-        }
-
-        .button-3 { /* Right */
-          top: 50%;
-          right: 0;
-          transform: translateY(-50%);
-          width: 378px;
-          height: 468px;
-        }
-
-        .image-display {
-          margin-top: 20px;
-          width: 100%;
-          max-width: 800px;
-        }
-
-        .campus-image {
-          width: 100%;
-          height: auto;
-          border-radius: 10px;
-        }
-      `}</style>
-    </div>
-  );
+                    return (
+                        <button
+                            key={index}
+                            onClick={() => handleButtonClick(area.fullImage)}
+                            className={`
+                absolute bg-transparent border-none cursor-pointer p-0 
+                transition-transform duration-100 hover:scale-105 group
+                ${index === 0 ? 'top-4 left-1/2 -translate-x-1/2 w-[400px] h-[200px]' : ''}
+                ${index === 1 ? 'bottom-4 left-1/2 -translate-x-1/2 w-[400px] h-[200px]' : ''}
+                ${index === 2 ? 'top-1/2 left-4 -translate-y-1/2 w-[200px] h-[300px]' : ''}
+                ${index === 3 ? 'top-1/2 right-4 -translate-y-1/2 w-[200px] h-[300px]' : ''}
+              `}
+                            style={buttonStyles}
+                        >
+                            <div className="absolute inset-0 flex items-center justify-center">
+                <span className="text-white font-bold text-2xl bg-black/50 px-4 py-2 rounded
+                  opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                  {area.name}
+                </span>
+                            </div>
+                        </button>
+                    );
+                })}
+            </div>
+            <div className="mt-5 w-full max-w-3xl px-4">
+                <img
+                    src={currentArea}
+                    alt="Campus Area"
+                    className="w-full h-auto rounded-lg"
+                />
+            </div>
+        </div>
+    );
 };
 
 export default CampusReimagined;
