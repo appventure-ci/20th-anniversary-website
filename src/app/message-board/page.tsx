@@ -125,7 +125,7 @@ const MessageBoard = () => {
           >
             <h2 className="text-2xl font-bold mb-2">{message.title}</h2>
             <h3 className="text-lg text-gray-700 mb-4">{message.subtitle}</h3>
-            <p className="text-lg leading-relaxed text-gray-700">{message.content}</p>
+            <p className="text-lg leading-relaxed text-gray-700 max-h-48 overflow-y-auto pr-2">{message.content}</p>
           </article>
         ))}
       </div>
