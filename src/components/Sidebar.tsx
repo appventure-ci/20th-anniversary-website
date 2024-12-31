@@ -45,7 +45,7 @@ const navItems: NavItem[] = [
     ),
   },
   {
-    path: '/timeline',
+    path: '/calendar',
     label: 'Timeline',
     activeColor: 'text-gray-500',
     icon: (
