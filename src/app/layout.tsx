@@ -20,28 +20,29 @@ export const metadata: Metadata = {
     description: "Celebrating 20 years of excellence",
 };
 
-export default function RootLayout({
-    children,
-}: Readonly<{
-    children: React.ReactNode;
-}>) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
     return (
         <html lang="en" className="h-full">
-            <body className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen h-full`}>
-                <div
-                    className="fixed inset-0 bg-cover bg-center bg-no-repeat -z-20"
-                    style={{
-                        backgroundImage: 'url("/imgs/nush-bg.png")',
-                    }}
+            <body 
+                className={`
+                    ${geistSans.variable} 
+                    ${geistMono.variable} 
+                    antialiased 
+                    min-h-screen 
+                    h-full
+                `}
+            >
+                <div 
+                    className="fixed inset-0 bg-cover bg-center bg-no-repeat -z-20" 
+                    style={{ backgroundImage: 'url("/imgs/nush-bg.png")' }} 
                 />
                 <div className="fixed inset-0 bg-white/50 -z-10" />
+                
                 <div className="relative min-h-screen">
                     <Sidebar />
-                    <main>
-                        {children}
-                    </main>
+                    {children}
                 </div>
             </body>
-        </html >
+        </html>
     );
 }
