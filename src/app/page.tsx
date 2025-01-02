@@ -36,20 +36,6 @@ export default function HomePage() {
                 <div className="flex justify-between items-end">
                     <CalendarPreview />
 
-                    {/* Book Promotion */}
-                    <div className="bg-white rounded-3xl p-6 flex items-center gap-4">
-                        <Image
-                            src="/api/placeholder/150/200"
-                            alt="Physics Book Cover"
-                            width={150}
-                            height={200}
-                            className="rounded-lg"
-                        />
-                        <div>
-                            <h3 className="text-2xl font-bold mb-2">GET<br />YOURS<br />NOW</h3>
-                            <p className="text-xl">for only<br />$29.99</p>
-                        </div>
-                    </div>
                 </div>
             </main>
         </div>
