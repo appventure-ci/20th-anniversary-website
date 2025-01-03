@@ -1,7 +1,6 @@
 'use client';
 
 import Link from 'next/link';
-import Image from 'next/image';
 import CalendarPreview from '@/components/CalendarPreview/CalendarPreview';
 import CountdownTimer from '@/components/CountdownTimer';
 

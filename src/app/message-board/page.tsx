@@ -30,6 +30,7 @@ const MessageBoard = () => {
       } else {
         setError('Failed to load messages');
       }
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (err) {
       setError('Failed to load messages');
     } finally {
@@ -64,6 +65,7 @@ const MessageBoard = () => {
           setError(data.message || 'Failed to add message');
         }
       }
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (err) {
       setError('Failed to submit message');
     } finally {

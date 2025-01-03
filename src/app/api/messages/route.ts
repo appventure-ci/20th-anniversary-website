@@ -28,6 +28,7 @@ async function getAllMessages(): Promise<string | never[]> {
 
 async function addMessage(message: Message): Promise<void> {
     const messages = await getAllMessages();
+    // @ts-expect-error eslint is doing weird things
     messages.push(message);
     await redis.set('messages', JSON.stringify(messages));
     await redis.incr('messageCount');
