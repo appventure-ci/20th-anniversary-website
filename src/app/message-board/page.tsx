@@ -91,10 +91,10 @@ const MessageBoard = () => {
             Back to Home
           </Link>
           <Link
-              href="/book"
+              href="../calendar"
               className="flex items-center px-6 py-3 bg-white/70 backdrop-blur-sm rounded-full shadow hover:bg-white/80 transition-colors text-lg"
           >
-            Next: Our Book
+            Next: Our Timeline
             <svg
                 className="w-5 h-5 ml-2"
                 viewBox="0 0 24 24"

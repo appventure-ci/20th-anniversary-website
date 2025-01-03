@@ -1,13 +1,44 @@
-import { NextResponse } from 'next/server';
-import { OpenAI } from 'openai';
-import type { Message } from '@/types';
+import {NextResponse} from 'next/server';
+import {OpenAI} from 'openai';
+import type {Message} from '@/types';
+import {Redis} from "@upstash/redis";
 
 const openai = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY
 });
 
+const redis = new Redis({
+    url: process.env.UPSTASH_REDIS_REST_URL!,
+    token: process.env.UPSTASH_REDIS_REST_TOKEN!,
+});
+
+// Helper functions for Redis operations
+async function initializeMessages() {
+    const exists = await redis.exists('messages');
+    if (!exists) {
+        await redis.set('messages', JSON.stringify(initialMessages));
+        await redis.set('messageCount', initialMessages.length);
+    }
+}
+
+async function getAllMessages(): Promise<string | never[]> {
+    const messages = await redis.get<string>('messages');
+    return messages ? messages : [];
+}
+
+async function addMessage(message: Message): Promise<void> {
+    const messages = await getAllMessages();
+    messages.push(message);
+    await redis.set('messages', JSON.stringify(messages));
+    await redis.incr('messageCount');
+}
+
+async function getNextMessageId(): Promise<number> {
+    return await redis.incr('messageCount');
+}
+
 // In-memory message store
-let messages: Message[] = [
+const initialMessages: Message[] = [
     {
         id: 1,
         title: 'Unforgettable Memories',
@@ -66,13 +97,18 @@ async function analyzeContent(title: string, content: string) {
     }
 }
 
+// Initialize the database on first import
+initializeMessages().catch(console.error);
+
 export async function GET() {
     try {
+        const messages = await getAllMessages();
         return NextResponse.json(
             { messages, status: 'success' },
             { status: 200 }
         );
     } catch (error) {
+        console.error('Redis Error:', error);
         return NextResponse.json(
             { error: 'Failed to fetch messages', status: 'error' },
             { status: 500 }
@@ -131,14 +167,14 @@ export async function POST(request: Request) {
 
         // Create new message if all checks pass
         const newMessage: Message = {
-            id: messages.length + 1,
+            id: await getNextMessageId(),
             title: body.title.trim(),
             subtitle: body.subtitle.trim(),
             content: body.content.trim()
         };
 
-        // Add to messages array
-        messages.push(newMessage);
+        // Add to Redis
+        await addMessage(newMessage);
 
         return NextResponse.json(
             {
