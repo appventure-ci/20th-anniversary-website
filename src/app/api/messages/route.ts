@@ -4,7 +4,7 @@ import type {Message} from '@/types';
 import {Redis} from "@upstash/redis";
 
 const openai = new OpenAI({
-    apiKey: process.env.OPENAI_API_KEY
+    apiKey: process.env.OPENAI_API_KEY!
 });
 
 const redis = new Redis({
