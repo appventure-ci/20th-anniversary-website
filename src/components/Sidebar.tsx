@@ -84,7 +84,7 @@ export default function Sidebar() {
   const pathname = usePathname();
 
   return (
-    <nav className="fixed left-4 top-1/4 bg-white rounded-full p-4 shadow-lg">
+    <nav className="fixed left-4 top-1/4 bg-white rounded-full p-4 shadow-lg z-40">
       <div className="flex flex-col gap-6">
         {navItems.map((item) => {
           const isActive = pathname === item.path;

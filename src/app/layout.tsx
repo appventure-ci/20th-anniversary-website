@@ -23,26 +23,26 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
     return (
         <html lang="en" className="h-full">
-            <body 
-                className={`
+        <body
+            className={`
                     ${geistSans.variable} 
                     ${geistMono.variable} 
                     antialiased 
                     min-h-screen 
                     h-full
                 `}
-            >
-                <div 
-                    className="fixed inset-0 bg-cover bg-center bg-no-repeat -z-20" 
-                    style={{ backgroundImage: 'url("/imgs/nush-bg.png")' }} 
-                />
-                <div className="fixed inset-0 bg-white/50 -z-10" />
-                
-                <div className="relative min-h-screen">
-                    <Sidebar />
-                    {children}
-                </div>
-            </body>
+        >
+        <div
+            className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2  bg-contain bg-no-repeat bg-center -z-20 w-full h-full bg-slate-800"
+            style={{ backgroundImage: 'url("/imgs/logo.png")' }}
+        />
+        <div className="fixed inset-0  -z-10" />
+
+        <div className="relative min-h-screen">
+            <Sidebar />
+            {children}
+        </div>
+        </body>
         </html>
     );
 }
